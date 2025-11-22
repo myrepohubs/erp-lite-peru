@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # Mis aplicaciones
     'core',
+    'compras', # <-- Añadir esta línea
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,51 @@
+<!-- compras/templates/compras/proveedor_form.html -->
+{% extends 'core/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1 class="h2 mb-4">{{ title }}</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.ruc.id_for_label }}" class="form-label">{{ form.ruc.label }}</label>
+                    {{ form.ruc }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.razon_social.id_for_label }}" class="form-label">{{ form.razon_social.label }}</label>
+                    {{ form.razon_social }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.direccion.id_for_label }}" class="form-label">{{ form.direccion.label }}</label>
+                {{ form.direccion }}
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.contacto.id_for_label }}" class="form-label">{{ form.contacto.label }}</label>
+                    {{ form.contacto }}
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.telefono.id_for_label }}" class="form-label">{{ form.telefono.label }}</label>
+                    {{ form.telefono }}
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.estado.id_for_label }}" class="form-label">{{ form.estado.label }}</label>
+                    {{ form.estado }}
+                </div>
+            </div>
+
+            <hr>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'compras:proveedor_list' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
