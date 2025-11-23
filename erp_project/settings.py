@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize', # <-- Añadir esta línea
 
         # Aplicaciones de terceros
     'django_htmx',
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     # Mis aplicaciones
     'core',
     'compras', # <-- Añadir esta línea
+    'inventario', # <-- Añadir esta línea
 ]
 
 MIDDLEWARE = [

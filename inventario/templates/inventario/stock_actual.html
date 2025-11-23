@@ -1,0 +1,96 @@
+<!-- inventario/templates/inventario/stock_actual.html -->
+{% extends 'core/base.html' %}
+{% load humanize %} <!-- Necesitaremos esto para formatear números -->
+
+{% block title %}Reporte de Stock Actual{% endblock %}
+
+{% block content %}
+<h1 class="h2">Reporte de Stock Actual</h1>
+<p class="text-muted">Vista consolidada del inventario en todos los almacenes.</p>
+
+<!-- KPIs -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Total de Productos</h5>
+                <p class="card-text fs-2 fw-bold">{{ total_productos }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Valor Total del Inventario</h5>
+                <p class="card-text fs-2 fw-bold">S/ {{ valor_total_inventario|floatformat:2|intcomma }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Almacenes Activos</h5>
+                <p class="card-text fs-2 fw-bold">{{ almacenes_activos }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filtros -->
+<div class="card mb-4">
+    <div class="card-header">Filtros de Búsqueda</div>
+    <div class="card-body">
+        <!-- Agrupamos los dos filtros en un mismo contenedor -->
+        <form id="stock-filtros">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="search" name="q" class="form-control"
+                           placeholder="Buscar por nombre de producto o SKU..."
+                           hx-get="{% url 'inventario:reporte_stock' %}"
+                           hx-trigger="keyup changed delay:500ms"
+                           hx-target="#stock-table-body"
+                           hx-indicator=".htmx-indicator"
+                           hx-include="#stock-filtros">
+                </div>
+                <div class="col-md-6">
+                    <select name="almacen" class="form-select"
+                            hx-get="{% url 'inventario:reporte_stock' %}"
+                            hx-trigger="change"
+                            hx-target="#stock-table-body"
+                            hx-indicator=".htmx-indicator"
+                            hx-include="#stock-filtros">
+                        <option value="">Todos los Almacenes</option>
+                        {% for almacen in almacenes %}
+                        <option value="{{ almacen.id }}">{{ almacen.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Tabla de Stock -->
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>PRODUCTO</th>
+                        <th>CATEGORÍA</th>
+                        <th>ALMACÉN</th>
+                        <th>STOCK ACTUAL</th>
+                        <th>ESTADO</th>
+                    </tr>
+                </thead>
+                <tbody id="stock-table-body">
+                    {% include 'inventario/partials/stock_table_partial.html' %}
+                </tbody>
+            </table>
+             <span class="htmx-indicator">Cargando...</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

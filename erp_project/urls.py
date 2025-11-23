@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')), # Añade esta línea
     path('', include('compras.urls')), # <-- Añadir esta línea
+    path('', include('inventario.urls')), # <-- Añadir esta línea
 ]
